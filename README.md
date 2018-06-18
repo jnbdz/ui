@@ -68,6 +68,12 @@ make
 cd ${DIR}
 ```
 
+Following the build of *libui*:
+
+```bash
+go get -v github.com/andlabs/ui
+```
+
 Then you need to use this script bind *ui* to *libui*:
 
 ```bash
