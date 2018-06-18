@@ -39,6 +39,48 @@ It also requires Go 1.6 or newer (due to various bugs in cgo that were fixed onl
 
 # Installation
 
+For this package to work you need to use the *libui*: https://github.com/andlabs/libui
+
+```bash
+git clone git@github.com:andlabs/libui.git
+```
+
+Then you might need to change the version of *libui*:
+
+```bash
+git checkout tags/alpha3.5
+```
+
+Then you need to build *libui*. This bash script will do what is needed to build *libui*:
+
+```bash
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+build_dir="${DIR}/libui/build/"
+if [ -d ${build_dir} ]; then
+    rm -rf ${build_dir}
+fi
+mkdir ${build_dir}
+cd ${build_dir}
+cmake -DBUILD_SHARED_LIBS=OFF ..
+make
+cd ${DIR}
+```
+
+Then you need to use this script bind *ui* to *libui*:
+
+```bash
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd ${DIR}/libui/build/
+cp out/libui.a ${GOPATH}/src/github.com/andlabs/ui/libui_linux_amd64.a
+cd ${GOPATH}/src/github.com/andlabs/ui/
+go build
+cd ${DIR}
+```
+
 # Documentation
 
 The in-code documentation needs improvement. I have written a [tutorial](https://github.com/andlabs/ui/wiki/Getting-Started) in the Wiki.
