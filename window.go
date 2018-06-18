@@ -22,12 +22,12 @@ var windows = make(map[*C.uiWindow]*Window)
 // entirety of the window. Though a Window is a Control,
 // a Window cannot be the child of another Control.
 type Window struct {
-	c	*C.uiControl
-	w	*C.uiWindow
+	c *C.uiControl
+	w *C.uiWindow
 
-	child		Control
+	child Control
 
-	onClosing		func(w *Window) bool
+	onClosing func(w *Window) bool
 }
 
 // NewWindow creates a new Window.
@@ -156,4 +156,14 @@ func (w *Window) Margined() bool {
 // best practices.
 func (w *Window) SetMargined(margined bool) {
 	C.uiWindowSetMargined(w.w, frombool(margined))
+}
+
+// Resizable returns whether the Window is resizable or not.
+func (w *Window) Resizable() bool {
+	return tobool(C.uiWindowResizable(w.w))
+}
+
+// SetResizable controls whether the Window is resizable or not.
+func (w *Window) SetResizable(resizable bool) {
+	C.uiWindowSetResizable(w.w, frombool(resizable))
 }
